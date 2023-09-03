@@ -10,5 +10,8 @@ migrate:
 migrate-fresh:
 	docker exec -it DokStoreApp php artisan migrate:fresh
 
+db-seed:
+	docker exec -it DokStoreApp php artisan db:seed
+
 ps:
 	docker ps
