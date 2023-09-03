@@ -13,4 +13,9 @@ class Mark extends Model
         'name',
         'slug',
     ];
+
+    public function carModels(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CarModel::class, 'mark_id');
+    }
 }
