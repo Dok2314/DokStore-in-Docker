@@ -24,7 +24,6 @@ return new class extends Migration
             $table->enum('condition', ['used', 'new'])->default('new');
             $table->enum('type', ['passenger', 'moto', 'freight', 'bus', 'air', 'water']);
             $table->enum('color', ['black', 'red', 'green', 'white', 'blue']);
-            $table->string('region');
             $table->year('year');
             $table->integer('price');
             $table->timestamps();
