@@ -14,13 +14,6 @@ return new class extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('mark_id');
-            $table->foreign('mark_id')
-                ->references('id')
-                ->on('marks')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
             $table->unsignedBigInteger('model_id');
             $table->foreign('model_id')
                 ->references('id')
@@ -30,6 +23,7 @@ return new class extends Migration
 
             $table->enum('condition', ['used', 'new'])->default('new');
             $table->enum('type', ['passenger', 'moto', 'freight', 'bus', 'air', 'water']);
+            $table->enum('color', ['black', 'red', 'green', 'white', 'blue']);
             $table->string('region');
             $table->year('year');
             $table->integer('price');

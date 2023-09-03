@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('models', function (Blueprint $table) {
             $table->id();
+
+            $table->unsignedBigInteger('mark_id');
+            $table->foreign('mark_id')
+                ->references('id')
+                ->on('marks')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+
             $table->string('name');
             $table->string('slug')->unique();
             $table->timestamps();
