@@ -3,11 +3,20 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "serve": "vite preview",
+        "watch": "vite"
     },
     "devDependencies": {
+        "admin-lte": "3.1.0",
         "axios": "^1.1.2",
+        "bootstrap": "^4.6.0",
+        "jquery": "^3.6",
+        "laravel-vite": "^0.0.24",
         "laravel-vite-plugin": "^0.8.0",
-        "vite": "^4.0.0"
+        "popper.js": "^1.16.1",
+        "sass": "^1.15.2",
+        "sass-loader": "^8.0.0",
+        "vite": "^4.4.9"
     }
 }
