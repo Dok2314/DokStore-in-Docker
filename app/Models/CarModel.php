@@ -15,4 +15,9 @@ class CarModel extends Model
         'name',
         'slug',
     ];
+
+    public function mark(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Mark::class);
+    }
 }
