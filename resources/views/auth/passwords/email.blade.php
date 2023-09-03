@@ -42,7 +42,7 @@
                         <a href="{{ route("login") }}">Login</a>
                     </p>
                     <p class="mb-0">
-                        <a href="{{ route("register") }}" class="text-center">Register a new membership</a>
+                        <a href="{{ route("register") }}" class="text-center">Зарегестрировать нового участника</a>
                     </p>
                 </div>
                 <!-- /.login-card-body -->
