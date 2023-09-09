@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Car;
 use App\Services\CrudService;
+use Illuminate\Support\Facades\Cache;
 
 class CarController extends BaseController
 {
@@ -17,11 +18,15 @@ class CarController extends BaseController
 
     public function index()
     {
-        $cars = Car::query()->orderBy('id', 'desc')->paginate(25);
+        $cars = Car::getFromCache();
         return view('admin.cars.index', compact('cars'));
     }
 
     public function create()
+    {
+
+    }
+    public function edit(Car $car)
     {
 
     }
