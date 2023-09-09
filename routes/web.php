@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Admin as AdminControllers;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,7 +19,10 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::group(['prefix' => 'cars'], function () {
+        Route::get('/', [AdminControllers\CarController::class, 'index'])->name('cars.index');
+    });
 });
 
 Auth::routes();
-
