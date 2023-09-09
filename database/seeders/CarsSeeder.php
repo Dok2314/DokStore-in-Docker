@@ -26,7 +26,7 @@ class CarsSeeder extends Seeder
             Car::create([
                 'model_id' => $model->id,
                 'condition' => $this->conditions[rand(0, count($this->conditions) - 1)],
-                'type' => $this->types[rand(0, count($this->types) - 1)],
+                'type' => 'passenger',
                 'color' => $this->colors[rand(0, count($this->colors) - 1)],
                 'year' => rand(2002, 2023),
                 'price' => rand(5000, 250000)

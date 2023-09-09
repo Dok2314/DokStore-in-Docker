@@ -23,19 +23,21 @@
                         <tr>
                             <th style="width: 10px">ID</th>
                             <th>Task</th>
-                            <th>Progress</th>
+                            <th>Модель</th>
                             <th>Состояние</th>
                             <th>Тип</th>
                             <th>Цвет</th>
+                            <th>Год</th>
+                            <th>Цена</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($cars as $car)
                             <tr>
                                 <td>{{ $car->id }}</td>
-                                <td>Update software</td>
+                                <td>{{ $car->model->mark->name }}</td>
                                 <td>
-                                    TEST
+                                    {{ $car->model->name }}
                                 </td>
                                 <td>
                                     {{ \App\Models\Car::conditions()[$car->condition] }}
@@ -46,12 +48,17 @@
                                 <td>
                                     {{ \App\Models\Car::colors()[$car->color] }}
                                 </td>
+                                <td>
+                                    {{ $car->year }}
+                                </td>
+                                <td>
+                                    {{ $car->price }} $
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
                 </div>
-
-    </div>
+        </div>
     </div>
 @endsection
