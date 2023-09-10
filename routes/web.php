@@ -29,6 +29,10 @@ Route::group(['prefix' => 'admin'], function () {
             Route::put('/', [AdminControllers\CarController::class, 'update'])->name('update');
         });
     });
+
+    Route::group(['prefix' => 'models', 'as' => 'models.'], function () {
+        Route::get('{markId}', [AdminControllers\CarController::class, 'getCarModelsByMark'])->name('byMark');
+    });
 });
 
 Auth::routes();
