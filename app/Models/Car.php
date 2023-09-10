@@ -77,7 +77,7 @@ class Car extends Model
 
     public static function getFromCache()
     {
-        return Cache::remember('cars_page_' . request('page', 1), 60, function () {
+        return Cache::tags(['cars'])->remember('cars_page_' . request('page', 1), 60, function () {
             return self::with(['model.mark'])
                 ->orderBy('id', 'desc')
                 ->paginate(25);
@@ -87,11 +87,15 @@ class Car extends Model
     protected static function booted()
     {
         static::created(function ($car) {
-            cache()->forget('cars_page_*');
+            Cache::tags(['cars'])->flush();
         });
 
         static::updated(function ($car) {
-            cache()->forget('cars_page_*');
+            Cache::tags(['cars'])->flush();
+        });
+
+        static::deleted(function ($car) {
+            Cache::tags(['cars'])->flush();
         });
     }
 }

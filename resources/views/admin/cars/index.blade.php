@@ -66,7 +66,7 @@
                                                 </a>
                                             </div>
                                             <div class="col-md-6">
-                                                <form action="" method="post" onsubmit="return confirmDelete();">
+                                                <form action="{{ route('cars.destroy', $car) }}" method="post" onsubmit="return confirmDelete();">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger">

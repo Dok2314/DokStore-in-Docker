@@ -39,21 +39,23 @@ class CarController extends BaseController
         ]);
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $car = $this->service->store(new DTO(...$request->except('_token')));
-        return redirect()->route('cars.edit', $car->id)->with('success', 'Машина успешно сохранена');
+        return $this->service->store(new DTO(...$request->except('_token')));
     }
 
     public function update(Car $car, UpdateRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $this->service->update($car, new DTO(...$request->except('_token', '_method')));
-        return redirect()->route('cars.edit', $car->id)->with('success', 'Машина успешно сохранена');
+        return $this->service->update($car, new DTO(...$request->except('_token', '_method')));
+    }
+
+    public function destroy(Car $car): \Illuminate\Http\RedirectResponse
+    {
+        return $this->service->destroy($car);
     }
 
     public function getCarModelsByMark($markId): \Illuminate\Http\JsonResponse
     {
-        $models = CarModel::query()->where('mark_id', $markId)->get();
-        return response()->json($models);
+        return $this->service->getByMark($markId);
     }
 }
