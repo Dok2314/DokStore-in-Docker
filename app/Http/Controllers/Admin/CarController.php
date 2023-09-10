@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Car;
+use App\Models\CarModel;
 use App\Services\CrudService;
-use Illuminate\Support\Facades\Cache;
 
 class CarController extends BaseController
 {
@@ -36,11 +36,17 @@ class CarController extends BaseController
 
     public function store()
     {
-        
+
     }
 
     public function update()
     {
-        
+
+    }
+
+    public function getCarModelsByMark($markId): \Illuminate\Http\JsonResponse
+    {
+        $models = CarModel::query()->where('mark_id', $markId)->get();
+        return response()->json($models);
     }
 }

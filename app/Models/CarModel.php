@@ -20,4 +20,9 @@ class CarModel extends Model
     {
         return $this->belongsTo(Mark::class);
     }
+
+    public function cars()
+    {
+        return $this->hasMany(Car::class);
+    }
 }
