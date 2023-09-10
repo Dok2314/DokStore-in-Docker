@@ -3,14 +3,15 @@
 namespace App\Services\Admin\Cars;
 
 use App\Models\Car;
+use App\Models\CarModel;
 use App\Services\Interfaces\CrudServiceInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class CrudService implements CrudServiceInterface
 {
-    public function store($dto): Model
+    public function store($dto): \Illuminate\Http\RedirectResponse
     {
-        return Car::query()->create([
+        $car = Car::query()->create([
             'model_id' => $dto->getModel(),
             'condition' => $dto->getCondition(),
             'type' => $dto->getType(),
@@ -18,9 +19,11 @@ class CrudService implements CrudServiceInterface
             'year' => $dto->getYear(),
             'price' => $dto->getPrice(),
         ]);
+
+        return redirect()->route('cars.edit', $car->id)->with('success', 'Машина успешно сохранена');
     }
 
-    public function update(Model $model, $dto)
+    public function update(Model $model, $dto): \Illuminate\Http\RedirectResponse
     {
         $model->update([
             'model_id' => $dto->getModel(),
@@ -33,10 +36,19 @@ class CrudService implements CrudServiceInterface
 
         $model->model->mark_id = $dto->getMark();
         $model->model->save();
+
+        return redirect()->route('cars.edit', $model->id)->with('success', 'Машина успешно сохранена');
     }
 
-    public function destroy($id)
+    public function destroy(Model $model): \Illuminate\Http\RedirectResponse
     {
+        $model->delete();
+        return redirect()->route('cars.index')->with('success', 'Машина успешно удалена');
+    }
 
+    public function getByMark(int $markId): \Illuminate\Http\JsonResponse
+    {
+        $models = CarModel::query()->where('mark_id', $markId)->get();
+        return response()->json($models);
     }
 }

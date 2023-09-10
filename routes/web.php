@@ -28,6 +28,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::group(['prefix' => '{car}'], function () {
             Route::get('/', [AdminControllers\CarController::class, 'edit'])->name('edit');
             Route::put('/', [AdminControllers\CarController::class, 'update'])->name('update');
+            Route::delete('/', [AdminControllers\CarController::class, 'destroy'])->name('destroy');
         });
     });
 

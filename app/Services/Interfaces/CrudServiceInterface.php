@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 interface CrudServiceInterface
 {
-    public function store($dto): Model;
+    public function store($dto): \Illuminate\Http\RedirectResponse;
 
-    public function update(Model $model, $dto);
+    public function update(Model $model, $dto): \Illuminate\Http\RedirectResponse;
 
-    public function destroy($id);
+    public function destroy(Model $model): \Illuminate\Http\RedirectResponse;
 }
