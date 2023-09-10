@@ -5,14 +5,29 @@
         <h1 class="text-black-50">{{ $model->id ? "Редактирование машины" : "Создание машины" }}</h1>
     </div>
 
+    @if($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Внимание!</strong> Произошла ошибка при сохранении данных.
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <div class="container-fluid">
         @if($model->id)
             <form method="post" action="{{ route('cars.update', $model->id) }}">
+            @csrf
             @method('PUT')
         @else
             <form method="post" action="{{ route('cars.store') }}">
+                @csrf
         @endif
-            @csrf
             <div class="card-body">
                 <label for="mark">Марка</label>
                 <select class="form-control" id="mark" name="mark">
@@ -27,7 +42,7 @@
 
             <div class="card-body">
                 <label for="model">Модель</label>
-                <select id="model" class="form-control">
+                <select id="model" class="form-control" name="model">
                     @if($model->model)
                         <option value="{{ $model->model->id }}" {{ $model->model->mark->id == $mark->id ? 'selected' : '' }}>
                             {{ $model->model->name }}
@@ -73,7 +88,7 @@
 
             <div class="card-body">
                 <label for="year">Год</label>
-                <input type="number" min="1995" max="2023" step="1" value="{{ $model->year ?: 2023 }}" id="year" class="form-control">
+                <input type="number" name="year" min="1995" max="2023" step="1" value="{{ $model->year ?: 0 }}" id="year" class="form-control">
             </div>
 
             <div class="card-body">

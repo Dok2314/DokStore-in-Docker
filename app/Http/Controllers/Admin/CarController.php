@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\Car\StoreRequest;
+use App\Http\Requests\Admin\Car\UpdateRequest;
+use App\Http\Requests\Admin\Cars\CarRequest;
+use App\Http\Requests\AdminCarRequest;
 use App\Models\Car;
 use App\Models\CarModel;
 use App\Services\CrudService;
@@ -34,14 +38,14 @@ class CarController extends BaseController
         ]);
     }
 
-    public function store()
+    public function store(StoreRequest $request)
     {
-
+        dd($request->all());
     }
 
-    public function update()
+    public function update(UpdateRequest $request)
     {
-
+        dd($request->all());
     }
 
     public function getCarModelsByMark($markId): \Illuminate\Http\JsonResponse
