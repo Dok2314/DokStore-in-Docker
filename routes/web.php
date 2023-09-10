@@ -22,10 +22,11 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['prefix' => 'cars', 'as' => 'cars.'], function () {
         Route::get('/', [AdminControllers\CarController::class, 'index'])->name('index');
+        Route::get('/create', [AdminControllers\CarController::class, 'create'])->name('create');
+        Route::post('/', [AdminControllers\CarController::class, 'store'])->name('store');
 
         Route::group(['prefix' => '{car}'], function () {
             Route::get('/', [AdminControllers\CarController::class, 'edit'])->name('edit');
-            Route::post('/', [AdminControllers\CarController::class, 'store'])->name('store');
             Route::put('/', [AdminControllers\CarController::class, 'update'])->name('update');
         });
     });

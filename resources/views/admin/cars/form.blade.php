@@ -5,6 +5,16 @@
         <h1 class="text-black-50">{{ $model->id ? "Редактирование машины" : "Создание машины" }}</h1>
     </div>
 
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Успех!</strong> {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+
     @if($errors->any())
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <strong>Внимание!</strong> Произошла ошибка при сохранении данных.
@@ -33,7 +43,12 @@
                 <select class="form-control" id="mark" name="mark">
                     <option value="">------Выберите марку------</option>
                     @foreach(\App\Models\Mark::getFromCache() as $mark)
-                        <option value="{{ $mark->id }}" {{ $model->model->mark->id == $mark->id ? 'selected' : '' }}>
+                        <option
+                            value="{{ $mark->id }}"
+                            @if($model->id)
+                                {{ $model->model->mark->id == $mark->id ? 'selected' : '' }}
+                            @endif
+                        >
                             {{ $mark->name }}
                         </option>
                     @endforeach

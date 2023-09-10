@@ -83,4 +83,15 @@ class Car extends Model
                 ->paginate(25);
         });
     }
+
+    protected static function booted()
+    {
+        static::created(function ($car) {
+            cache()->forget('cars_page_*');
+        });
+
+        static::updated(function ($car) {
+            cache()->forget('cars_page_*');
+        });
+    }
 }
