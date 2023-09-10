@@ -9,11 +9,7 @@
         <div class="card">
                 <div class="card-header">
                         <ul class="pagination pagination-sm float-left">
-                            <li class="page-item"><a class="page-link" href="#">«</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">»</a></li>
+                            {{ $cars->links('vendor.pagination.bootstrap-4') }}
                         </ul>
                 </div>
 
@@ -29,6 +25,7 @@
                             <th>Цвет</th>
                             <th>Год</th>
                             <th>Цена</th>
+                            <th style="width: 10px">Действия</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -54,6 +51,26 @@
                                 <td>
                                     {{ $car->price }} $
                                 </td>
+                                <td>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <a href="{{ route('cars.edit', $car->id) }}" class="btn btn-primary">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <form action="" method="post" onsubmit="return confirmDelete();">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -62,3 +79,9 @@
         </div>
     </div>
 @endsection
+
+<script>
+    function confirmDelete() {
+        return confirm("Вы действительно хотите удалить запись?");
+    }
+</script>

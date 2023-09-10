@@ -7,7 +7,7 @@
 </li>
 
 <li class="nav-item">
-    <a href="{{ route('cars.index') }}" class="nav-link {{ Request::routeIs('cars.index') ? 'active' : '' }}">
+    <a href="{{ route('cars.index') }}" class="nav-link {{ Request::routeIs('cars.index') || Request::routeIs('cars.edit') ? 'active' : '' }}">
         <i class="nav-icon fas fa-car"></i>
         <p>Машины</p>
     </a>

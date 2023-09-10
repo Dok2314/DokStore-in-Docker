@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Car extends Model
 {
@@ -72,5 +73,14 @@ class Car extends Model
             self::USED => trans('main.models.car.conditions.used'),
             self::NEW => trans('main.models.car.conditions.new'),
         ];
+    }
+
+    public static function getFromCache()
+    {
+        return Cache::remember('cars_page_' . request('page', 1), 60, function () {
+            return self::with(['model.mark'])
+                ->orderBy('id', 'desc')
+                ->paginate(25);
+        });
     }
 }
