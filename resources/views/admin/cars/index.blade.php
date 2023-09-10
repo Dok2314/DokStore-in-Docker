@@ -11,6 +11,12 @@
                         <ul class="pagination pagination-sm float-left">
                             {{ $cars->links('vendor.pagination.bootstrap-4') }}
                         </ul>
+
+                    <ul class="pagination pagination-sm float-right">
+                        <a href="{{ route('cars.create') }}" class="btn btn-success">
+                            Создать
+                        </a>
+                    </ul>
                 </div>
 
                 <div class="card-body p-0">

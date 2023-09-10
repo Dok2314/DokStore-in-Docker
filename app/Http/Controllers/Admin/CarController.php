@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DTO\Admin\Cars\DTO;
 use App\Http\Requests\Admin\Car\StoreRequest;
 use App\Http\Requests\Admin\Car\UpdateRequest;
-use App\Http\Requests\Admin\Cars\CarRequest;
-use App\Http\Requests\AdminCarRequest;
 use App\Models\Car;
 use App\Models\CarModel;
-use App\Services\CrudService;
+use App\Services\Admin\Cars\CrudService;
 
 class CarController extends BaseController
 {
@@ -28,7 +27,9 @@ class CarController extends BaseController
 
     public function create()
     {
-
+        return view('admin.cars.form', [
+            'model' => new Car
+        ]);
     }
 
     public function edit(Car $car)
@@ -40,12 +41,14 @@ class CarController extends BaseController
 
     public function store(StoreRequest $request)
     {
-        dd($request->all());
+        $car = $this->service->store(new DTO(...$request->except('_token')));
+        return redirect()->route('cars.edit', $car->id)->with('success', 'Машина успешно сохранена');
     }
 
-    public function update(UpdateRequest $request)
+    public function update(Car $car, UpdateRequest $request): \Illuminate\Http\RedirectResponse
     {
-        dd($request->all());
+        $this->service->update($car, new DTO(...$request->except('_token', '_method')));
+        return redirect()->route('cars.edit', $car->id)->with('success', 'Машина успешно сохранена');
     }
 
     public function getCarModelsByMark($markId): \Illuminate\Http\JsonResponse
