@@ -26,8 +26,21 @@ class CarController extends BaseController
     {
 
     }
+
     public function edit(Car $car)
     {
+        return view('admin.cars.form', [
+            'model' => $car
+        ]);
+    }
 
+    public function store()
+    {
+        
+    }
+
+    public function update()
+    {
+        
     }
 }
