@@ -7,6 +7,7 @@ use App\Enums\TypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Nette\Utils\Type;
 
 class Car extends Model
 {
@@ -27,6 +28,11 @@ class Car extends Model
 //        'region_id',
         'year',
         'price',
+    ];
+
+    protected $casts = [
+        'condition' => ConditionEnum::class,
+        'type' => TypeEnum::class,
     ];
 
     public function model(): \Illuminate\Database\Eloquent\Relations\BelongsTo
