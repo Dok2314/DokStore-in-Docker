@@ -15,3 +15,7 @@ db-seed:
 
 ps:
 	docker ps
+
+cache-clear:
+	docker exec -it DokStoreApp php artisan cache:clear
+

@@ -43,10 +43,10 @@
                                     {{ $car->model->name }}
                                 </td>
                                 <td>
-                                    {{ \App\Models\Car::conditions()[$car->condition] }}
+                                    {{ \App\Models\Car::conditions()[$car->condition->name] }}
                                 </td>
                                 <td>
-                                    {{ \App\Models\Car::types()[$car->type] }}
+                                    {{ \App\Models\Car::types()[$car->type->name] }}
                                 </td>
                                 <td>
                                     {{ \App\Models\Car::colors()[$car->color] }}

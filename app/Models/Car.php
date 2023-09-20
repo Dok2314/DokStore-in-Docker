@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\ConditionEnum;
+use App\Enums\TypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
@@ -9,18 +11,6 @@ use Illuminate\Support\Facades\Cache;
 class Car extends Model
 {
     use HasFactory;
-
-    // Conditions
-    const USED = 'used';
-    const NEW = 'new';
-
-    // Types
-    const PASSENGER = 'passenger';
-    const MOTO = 'moto';
-    const FREIGHT = 'freight';
-    const BUS = 'bus';
-    const AIR = 'air';
-    const WATER = 'water';
 
     // Colors
     const BLACK = 'black';
@@ -39,6 +29,11 @@ class Car extends Model
         'price',
     ];
 
+    protected $casts = [
+        'condition' => ConditionEnum::class,
+        'type' => TypeEnum::class,
+    ];
+
     public function model(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(CarModel::class);
@@ -46,14 +41,7 @@ class Car extends Model
 
     public static function types(): array
     {
-        return [
-            self::PASSENGER => trans('main.models.car.types.passenger'),
-            self::MOTO => trans('main.models.car.types.moto'),
-            self::FREIGHT => trans('main.models.car.types.freight'),
-            self::BUS => trans('main.models.car.types.bus'),
-            self::AIR => trans('main.models.car.types.air'),
-            self::WATER => trans('main.models.car.types.water'),
-        ];
+        return TypeEnum::getTypes();
     }
 
     public static function colors(): array
@@ -69,10 +57,7 @@ class Car extends Model
 
     public static function conditions(): array
     {
-        return [
-            self::USED => trans('main.models.car.conditions.used'),
-            self::NEW => trans('main.models.car.conditions.new'),
-        ];
+        return ConditionEnum::getConditions();
     }
 
     public static function getFromCache()
