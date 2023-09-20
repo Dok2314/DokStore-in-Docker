@@ -2,10 +2,14 @@
 
 namespace App\Services\Admin\Cars;
 
+use App\Jobs\CarCreatedJob;
+use App\Mail\CarMail;
 use App\Models\Car;
 use App\Models\CarModel;
 use App\Services\Interfaces\CrudServiceInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CrudService implements CrudServiceInterface
 {
@@ -19,6 +23,8 @@ class CrudService implements CrudServiceInterface
             'year' => $dto->getYear(),
             'price' => $dto->getPrice(),
         ]);
+
+        dispatch(new CarCreatedJob(Auth::user(), $car));
 
         return redirect()->route('cars.edit', $car->id)->with('success', 'Машина успешно сохранена');
     }
