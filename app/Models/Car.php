@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\ConditionEnum;
+use App\Enums\TypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
@@ -10,17 +12,17 @@ class Car extends Model
 {
     use HasFactory;
 
-    // Conditions
-    const USED = 'used';
-    const NEW = 'new';
+//    // Conditions
+//    const USED = 'used';
+//    const NEW = 'new';
 
-    // Types
-    const PASSENGER = 'passenger';
-    const MOTO = 'moto';
-    const FREIGHT = 'freight';
-    const BUS = 'bus';
-    const AIR = 'air';
-    const WATER = 'water';
+//    // Types
+//    const PASSENGER = 'passenger';
+//    const MOTO = 'moto';
+//    const FREIGHT = 'freight';
+//    const BUS = 'bus';
+//    const AIR = 'air';
+//    const WATER = 'water';
 
     // Colors
     const BLACK = 'black';
@@ -47,12 +49,12 @@ class Car extends Model
     public static function types(): array
     {
         return [
-            self::PASSENGER => trans('main.models.car.types.passenger'),
-            self::MOTO => trans('main.models.car.types.moto'),
-            self::FREIGHT => trans('main.models.car.types.freight'),
-            self::BUS => trans('main.models.car.types.bus'),
-            self::AIR => trans('main.models.car.types.air'),
-            self::WATER => trans('main.models.car.types.water'),
+            TypeEnum::passenger->name => trans('main.models.car.types.' . TypeEnum::passenger->value),
+            TypeEnum::moto->name => trans('main.models.car.types.' . TypeEnum::moto->value),
+            TypeEnum::freight->name => trans('main.models.car.types.' . TypeEnum::freight->value),
+            TypeEnum::bus->name => trans('main.models.car.types.' . TypeEnum::bus->value),
+            TypeEnum::air->name => trans('main.models.car.types.' . TypeEnum::air->value),
+            TypeEnum::water->name => trans('main.models.car.types.' . TypeEnum::water->value),
         ];
     }
 
@@ -70,8 +72,8 @@ class Car extends Model
     public static function conditions(): array
     {
         return [
-            self::USED => trans('main.models.car.conditions.used'),
-            self::NEW => trans('main.models.car.conditions.new'),
+            ConditionEnum::used->name => trans('main.models.car.conditions.' . ConditionEnum::used->value),
+            ConditionEnum::new->name => trans('main.models.car.conditions.' . ConditionEnum::new->value),
         ];
     }
 
