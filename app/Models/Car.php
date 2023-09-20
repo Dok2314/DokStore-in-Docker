@@ -12,18 +12,6 @@ class Car extends Model
 {
     use HasFactory;
 
-//    // Conditions
-//    const USED = 'used';
-//    const NEW = 'new';
-
-//    // Types
-//    const PASSENGER = 'passenger';
-//    const MOTO = 'moto';
-//    const FREIGHT = 'freight';
-//    const BUS = 'bus';
-//    const AIR = 'air';
-//    const WATER = 'water';
-
     // Colors
     const BLACK = 'black';
     const RED = 'red';
@@ -48,14 +36,7 @@ class Car extends Model
 
     public static function types(): array
     {
-        return [
-            TypeEnum::passenger->name => trans('main.models.car.types.' . TypeEnum::passenger->value),
-            TypeEnum::moto->name => trans('main.models.car.types.' . TypeEnum::moto->value),
-            TypeEnum::freight->name => trans('main.models.car.types.' . TypeEnum::freight->value),
-            TypeEnum::bus->name => trans('main.models.car.types.' . TypeEnum::bus->value),
-            TypeEnum::air->name => trans('main.models.car.types.' . TypeEnum::air->value),
-            TypeEnum::water->name => trans('main.models.car.types.' . TypeEnum::water->value),
-        ];
+        return TypeEnum::getTypes();
     }
 
     public static function colors(): array
@@ -71,10 +52,7 @@ class Car extends Model
 
     public static function conditions(): array
     {
-        return [
-            ConditionEnum::used->name => trans('main.models.car.conditions.' . ConditionEnum::used->value),
-            ConditionEnum::new->name => trans('main.models.car.conditions.' . ConditionEnum::new->value),
-        ];
+        return ConditionEnum::getConditions();
     }
 
     public static function getFromCache()

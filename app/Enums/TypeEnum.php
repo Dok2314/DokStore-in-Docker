@@ -2,7 +2,9 @@
 
 namespace App\Enums;
 
-enum TypeEnum: string
+use App\Enums\Interfaces\CarEnumInterface;
+
+enum TypeEnum: string implements CarEnumInterface
 {
     case passenger = 'passenger';
 
@@ -15,4 +17,17 @@ enum TypeEnum: string
     case air = 'air';
 
     case water = 'water';
+
+    public static function getType(TypeEnum $enum): array
+    {
+        return [
+            $enum->name => trans('main.models.car.types.' . $enum->value)
+        ];
+    }
+
+    public static function getTypes(): array
+    {
+        return array_merge(...array_map([self::class, 'getType'], self::cases()));
+    }
+
 }
