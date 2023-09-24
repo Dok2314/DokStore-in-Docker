@@ -7,6 +7,8 @@ use App\Http\Requests\Admin\Car\StoreRequest;
 use App\Http\Requests\Admin\Car\UpdateRequest;
 use App\Models\Car;
 use App\Services\Admin\Cars\CrudService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class CarController extends BaseController
 {
@@ -55,6 +57,7 @@ class CarController extends BaseController
 
     public function getCarModelsByMark($markId): \Illuminate\Http\JsonResponse
     {
+        $this->authorize('delete-record');
         return $this->service->getByMark($markId);
     }
 }

@@ -56,8 +56,8 @@ class User extends Authenticatable
         return $query->where('is_super_admin', 1);
     }
 
-    public function isSuperAdmin()
+    public function isSuperAdmin(): bool
     {
-        return $this->where('is_super_admin', 1)->exists();
+        return $this->is_super_admin == 1;
     }
 }
