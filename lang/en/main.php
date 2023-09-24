@@ -22,6 +22,14 @@ return [
                 'new' => 'New',
                 'used' => 'Used',
             ],
+        ],
+        'permission' => [
+            'names' => [
+                'create' => 'Create',
+                'read' => 'Read',
+                'update' => 'Update',
+                'delete' => 'Delete',
+            ]
         ]
     ],
 ];

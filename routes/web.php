@@ -32,6 +32,18 @@ Route::group(['prefix' => 'admin'], function () {
         });
     });
 
+    Route::group(['prefix' => 'roles', 'as' => 'roles.'], function () {
+        Route::get('/', [AdminControllers\RoleController::class, 'index'])->name('index');
+        Route::get('/create', [AdminControllers\RoleController::class, 'create'])->name('create');
+        Route::post('/', [AdminControllers\RoleController::class, 'store'])->name('store');
+
+        Route::group(['prefix' => '{role}'], function () {
+            Route::get('/', [AdminControllers\RoleController::class, 'edit'])->name('edit');
+            Route::put('/', [AdminControllers\RoleController::class, 'update'])->name('update');
+            Route::delete('/', [AdminControllers\RoleController::class, 'destroy'])->name('destroy');
+        });
+    });
+
     Route::group(['prefix' => 'models', 'as' => 'models.'], function () {
         Route::get('{markId}', [AdminControllers\CarController::class, 'getCarModelsByMark'])->name('byMark');
     });
