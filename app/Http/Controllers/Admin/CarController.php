@@ -6,7 +6,6 @@ use App\DTO\Admin\Cars\DTO;
 use App\Http\Requests\Admin\Car\StoreRequest;
 use App\Http\Requests\Admin\Car\UpdateRequest;
 use App\Models\Car;
-use App\Models\CarModel;
 use App\Services\Admin\Cars\CrudService;
 
 class CarController extends BaseController
