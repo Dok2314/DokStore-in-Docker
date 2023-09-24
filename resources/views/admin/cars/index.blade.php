@@ -24,7 +24,7 @@
                         <thead>
                         <tr>
                             <th style="width: 10px">ID</th>
-                            <th>Task</th>
+                            <th>Марка</th>
                             <th>Модель</th>
                             <th>Состояние</th>
                             <th>Тип</th>
@@ -65,15 +65,17 @@
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                             </div>
-                                            <div class="col-md-6">
-                                                <form action="{{ route('cars.destroy', $car) }}" method="post" onsubmit="return confirmDelete();">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
+                                            @can('delete-record')
+                                                <div class="col-md-6">
+                                                    <form action="{{ route('cars.destroy', $car) }}" method="post" onsubmit="return confirmDelete();">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            @endcan
                                         </div>
                                     </div>
                                 </td>
