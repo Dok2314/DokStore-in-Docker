@@ -3,26 +3,17 @@
 namespace App\Services\Admin\Cars;
 
 use App\Jobs\CarCreatedJob;
-use App\Mail\CarMail;
 use App\Models\Car;
 use App\Models\CarModel;
 use App\Services\Interfaces\CrudServiceInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 
 class CrudService implements CrudServiceInterface
 {
     public function store($dto): \Illuminate\Http\RedirectResponse
     {
-        $car = Car::query()->create([
-            'model_id' => $dto->getModel(),
-            'condition' => $dto->getCondition(),
-            'type' => $dto->getType(),
-            'color' => $dto->getColor(),
-            'year' => $dto->getYear(),
-            'price' => $dto->getPrice(),
-        ]);
+        $car = Car::query()->create($this->getData($dto));
 
         dispatch(new CarCreatedJob(Auth::user(), $car));
 
@@ -31,14 +22,7 @@ class CrudService implements CrudServiceInterface
 
     public function update(Model $model, $dto): \Illuminate\Http\RedirectResponse
     {
-        $model->update([
-            'model_id' => $dto->getModel(),
-            'condition' => $dto->getCondition(),
-            'type' => $dto->getType(),
-            'color' => $dto->getColor(),
-            'year' => $dto->getYear(),
-            'price' => $dto->getPrice(),
-        ]);
+        $model->update($this->getData($dto));
 
         $model->model->mark_id = $dto->getMark();
         $model->model->save();
@@ -56,5 +40,17 @@ class CrudService implements CrudServiceInterface
     {
         $models = CarModel::query()->where('mark_id', $markId)->get();
         return response()->json($models);
+    }
+
+    protected function getData($dto): array
+    {
+        return [
+            'model_id' => $dto->getModel(),
+            'condition' => $dto->getCondition(),
+            'type' => $dto->getType(),
+            'color' => $dto->getColor(),
+            'year' => $dto->getYear(),
+            'price' => $dto->getPrice(),
+        ];
     }
 }
