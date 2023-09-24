@@ -23,9 +23,7 @@ class CrudService implements CrudServiceInterface
     public function update(Model $model, $dto): \Illuminate\Http\RedirectResponse
     {
         $model->update($this->getData($dto));
-
-        $model->model->mark_id = $dto->getMark();
-        $model->model->save();
+        $this->addMark($model, $dto);
 
         return redirect()->route('cars.edit', $model->id)->with('success', 'Машина успешно сохранена');
     }
@@ -52,5 +50,11 @@ class CrudService implements CrudServiceInterface
             'year' => $dto->getYear(),
             'price' => $dto->getPrice(),
         ];
+    }
+
+    protected function addMark(Model $model, $dto): void
+    {
+        $model->model->mark_id = $dto->getMark();
+        $model->model->save();
     }
 }

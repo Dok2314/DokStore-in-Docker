@@ -8,6 +8,8 @@ use App\Http\Requests\Admin\Roles\UpdateRequest;
 use App\Http\Requests\Admin\Role\StoreRequest;
 use App\Models\Role;
 use App\Services\Admin\Roles\CrudService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class RoleController extends Controller
 {
@@ -50,6 +52,7 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
+        $this->authorize('delete-record');
         return $this->service->destroy($role);
     }
 }
