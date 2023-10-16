@@ -10,26 +10,25 @@ use Illuminate\Support\Str;
 
 class CrudService implements CrudServiceInterface
 {
-    public function store($dto): \Illuminate\Http\RedirectResponse
+    public function store($dto)
     {
         $role = Role::query()->create($this->getData($dto));
         $role->permissions()->sync($dto->getPermissions());
 
-        return redirect()->route('roles.edit', $role->id)->with('success', 'Роль успешно сохранена');
+        return $role;
     }
 
-    public function update(Model $model, $dto): \Illuminate\Http\RedirectResponse
+    public function update(Model $model, $dto): Model
     {
         $model->update($this->getData($dto));
         $model->permissions()->sync($dto->getPermissions());
 
-        return redirect()->route('roles.edit', $model->id)->with('success', 'Роль успешно сохранена');
+        return $model;
     }
 
-    public function destroy(Model $model): \Illuminate\Http\RedirectResponse
+    public function destroy(Model $model): void
     {
         $model->delete();
-        return redirect()->route('roles.index')->with('success', 'Роль успешно удалена');
     }
 
     protected function getData(DTO $dto): array

@@ -7,8 +7,6 @@ use App\Http\Requests\Admin\Car\StoreRequest;
 use App\Http\Requests\Admin\Car\UpdateRequest;
 use App\Models\Car;
 use App\Services\Admin\Cars\CrudService;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 class CarController extends BaseController
 {
@@ -40,22 +38,25 @@ class CarController extends BaseController
         ]);
     }
 
-    public function store(StoreRequest $request): \Illuminate\Http\RedirectResponse
+    public function store(StoreRequest $request)
     {
-        return $this->service->store(new DTO(...$request->except('_token')));
+        $car = $this->service->store(new DTO(...$request->except('_token')));
+        return redirect()->route('cars.edit', $car->id)->with('success', 'Машина успешно сохранена')
     }
 
     public function update(Car $car, UpdateRequest $request): \Illuminate\Http\RedirectResponse
     {
-        return $this->service->update($car, new DTO(...$request->except('_token', '_method')));
+        $model = $this->service->update($car, new DTO(...$request->except('_token', '_method')));
+        return redirect()->route('cars.edit', $model->id)->with('success', 'Машина успешно сохранена');
     }
 
-    public function destroy(Car $car): \Illuminate\Http\RedirectResponse
+    public function destroy(Car $car)
     {
-        return $this->service->destroy($car);
+        $this->service->destroy($car);
+        return redirect()->route('cars.index')->with('success', 'Машина успешно удалена');
     }
 
-    public function getCarModelsByMark($markId): \Illuminate\Http\JsonResponse
+    public function getCarModelsByMark($markId)
     {
         $this->authorize('delete-record');
         return $this->service->getByMark($markId);

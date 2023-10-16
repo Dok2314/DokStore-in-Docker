@@ -11,30 +11,28 @@ use Illuminate\Support\Facades\Auth;
 
 class CrudService implements CrudServiceInterface
 {
-    public function store($dto): \Illuminate\Http\RedirectResponse
+    public function store($dto)
     {
         $car = Car::query()->create($this->getData($dto));
-
         dispatch(new CarCreatedJob(Auth::user(), $car));
 
-        return redirect()->route('cars.edit', $car->id)->with('success', 'Машина успешно сохранена');
+        return $car;
     }
 
-    public function update(Model $model, $dto): \Illuminate\Http\RedirectResponse
+    public function update(Model $model, $dto)
     {
         $model->update($this->getData($dto));
         $this->addMark($model, $dto);
 
-        return redirect()->route('cars.edit', $model->id)->with('success', 'Машина успешно сохранена');
+        return $model;
     }
 
-    public function destroy(Model $model): \Illuminate\Http\RedirectResponse
+    public function destroy(Model $model): void
     {
         $model->delete();
-        return redirect()->route('cars.index')->with('success', 'Машина успешно удалена');
     }
 
-    public function getByMark(int $markId): \Illuminate\Http\JsonResponse
+    public function getByMark(int $markId)
     {
         $models = CarModel::query()->where('mark_id', $markId)->get();
         return response()->json($models);

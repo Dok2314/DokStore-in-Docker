@@ -18,16 +18,15 @@ enum TypeEnum: string implements CarEnumInterface
 
     case water = 'water';
 
-    public static function getType(TypeEnum $enum): array
+    public function translate(): string
     {
-        return [
-            $enum->name => trans('main.models.car.types.' . $enum->value)
-        ];
+        return trans('main.models.car.types.' . $this->value);
     }
 
     public static function getTypes(): array
     {
-        return array_merge(...array_map([self::class, 'getType'], self::cases()));
+        return collect(self::cases())->mapWithKeys(fn(self $v) => [
+            $v->name => $v->translate()
+        ])->all();
     }
-
 }

@@ -8,8 +8,6 @@ use App\Http\Requests\Admin\Roles\UpdateRequest;
 use App\Http\Requests\Admin\Role\StoreRequest;
 use App\Models\Role;
 use App\Services\Admin\Roles\CrudService;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 class RoleController extends Controller
 {
@@ -35,7 +33,8 @@ class RoleController extends Controller
 
     public function store(StoreRequest $request)
     {
-        return $this->service->store(new DTO(...$request->except('_token')));
+        $role = $this->service->store(new DTO(...$request->except('_token')));
+        return redirect()->route('roles.edit', $role->id)->with('success', 'Роль успешно сохранена');
     }
 
     public function edit(Role $role)
@@ -47,12 +46,14 @@ class RoleController extends Controller
 
     public function update(Role $role, UpdateRequest $request)
     {
-        return $this->service->update($role, new DTO(...$request->except('_token', '_method')));
+        $model = $this->service->update($role, new DTO(...$request->except('_token', '_method')));
+        return redirect()->route('roles.edit', $model->id)->with('success', 'Роль успешно сохранена');
     }
 
     public function destroy(Role $role)
     {
         $this->authorize('delete-record');
-        return $this->service->destroy($role);
+        $this->service->destroy($role);
+        return redirect()->route('roles.index')->with('success', 'Роль успешно удалена');
     }
 }
