@@ -40,7 +40,7 @@ class CarController extends BaseController
     public function store(StoreRequest $request)
     {
         $car = $this->service->store(new DTO(...$request->except('_token')));
-        return redirect()->route('cars.edit', $car->id)->with('success', 'Машина успешно сохранена')
+        return redirect()->route('cars.edit', $car->id)->with('success', 'Машина успешно сохранена');
     }
 
     public function update(Car $car, UpdateRequest $request): \Illuminate\Http\RedirectResponse
