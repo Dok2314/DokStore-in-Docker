@@ -17,7 +17,6 @@ class CarController extends BaseController
         $this->service = $service;
     }
 
-
     public function index()
     {
         $cars = Car::getFromCache();
